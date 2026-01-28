@@ -16,6 +16,16 @@ python -m pipx ensurepath
 pipx install neo4j-mcp-installer
 ```
 
+## Install from Source
+
+To install locally from the git repository:
+
+```bash
+git clone <repository-url>
+cd mcp-pip
+pipx install -e .
+```
+
 ## Use
 
 ```bash
