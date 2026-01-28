@@ -21,8 +21,8 @@ pipx install neo4j-mcp-installer
 To install locally from the git repository:
 
 ```bash
-git clone <repository-url>
-cd mcp-pip
+git clone https://github.com/mjfwebb/neo4j-mcp-installer.git
+cd neo4j-mcp-installer
 pipx install -e .
 ```
 
