@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/neo4j_mcp_installer/__init__.py
+src/neo4j_mcp_installer/cli.py
+src/neo4j_mcp_installer/installer.py
+src/neo4j_mcp_installer.egg-info/PKG-INFO
+src/neo4j_mcp_installer.egg-info/SOURCES.txt
+src/neo4j_mcp_installer.egg-info/dependency_links.txt
+src/neo4j_mcp_installer.egg-info/entry_points.txt
+src/neo4j_mcp_installer.egg-info/requires.txt
+src/neo4j_mcp_installer.egg-info/top_level.txt
