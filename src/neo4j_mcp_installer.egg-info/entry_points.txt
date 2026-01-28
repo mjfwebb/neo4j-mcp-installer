@@ -1,2 +1,0 @@
-[console_scripts]
-neo4j-mcp-installer = neo4j_mcp_installer.cli:main
