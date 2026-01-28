@@ -29,11 +29,25 @@ pipx install -e .
 ## Use
 
 ```bash
-neo4j-mcp-installer install                # Install the MCP binary
-neo4j-mcp-installer --help                 # Show help
-neo4j-mcp-installer upgrade                # Upgrade to latest version
-neo4j-mcp-installer where                  # Show installation location
-neo4j-mcp-installer uninstall              # Remove the installed binary
+# Basic commands
+neo4j-mcp-installer install                      # Install the latest version
+neo4j-mcp-installer upgrade                      # Upgrade to the latest version
+neo4j-mcp-installer where                        # Show installation location
+neo4j-mcp-installer uninstall                    # Remove the installed binary
+
+# Install options
+neo4j-mcp-installer install --version v1.2.0     # Install specific version
+neo4j-mcp-installer install --install-dir ~/bin  # Install to custom directory
+neo4j-mcp-installer install --force              # Force re-download
+neo4j-mcp-installer install --no-verify          # Skip checksum verification
+
+# Uninstall options
+neo4j-mcp-installer uninstall --clean-cache      # Remove binary and all cached files
+neo4j-mcp-installer uninstall --install-dir ~/bin # Uninstall from custom directory
+
+# Show help
+neo4j-mcp-installer --help                       # General help
+neo4j-mcp-installer install --help               # Help for install command
 ```
 
 ## Configure

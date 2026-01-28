@@ -6,7 +6,7 @@ import shutil
 import sys
 from pathlib import Path
 
-from .installer import default_install_dir, install_binary
+from .installer import data_root, default_install_dir, install_binary
 
 
 def _on_path(dir_: Path) -> bool:
@@ -35,22 +35,22 @@ def main() -> None:
     )
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    p_install = sub.add_parser("install", help="Install the neo4j-mcp binary to a user bin directory.")
-    p_install.add_argument("--version", help="Release tag (e.g. v1.2.0). Default: latest.")
-    p_install.add_argument("--install-dir", help="Where to place the neo4j-mcp binary.")
-    p_install.add_argument("--no-verify", action="store_true", help="Skip checksum verification.")
-    p_install.add_argument("--force", action="store_true", help="Re-download & re-extract.")
+    p_install = sub.add_parser("install", help="Install the neo4j-mcp binary.")
+    p_install.add_argument("--version", help="Release tag (e.g., v1.2.0). Default: latest.")
+    p_install.add_argument("--install-dir", help="Custom install directory. Default: ~/.local/bin (Linux/macOS) or %%LOCALAPPDATA%% (Windows).")
+    p_install.add_argument("--no-verify", action="store_true", help="Skip SHA256 checksum verification.")
+    p_install.add_argument("--force", action="store_true", help="Force re-download and re-extract even if already installed.")
 
-    p_upgrade = sub.add_parser("upgrade", help="Install latest (or specified) version, overwriting existing binary.")
-    p_upgrade.add_argument("--version", help="Release tag (e.g. v1.2.0). Default: latest.")
-    p_upgrade.add_argument("--install-dir", help="Where to place the neo4j-mcp binary.")
+    p_upgrade = sub.add_parser("upgrade", help="Upgrade to the latest (or specified) version, always re-downloading.")
+    p_upgrade.add_argument("--version", help="Release tag (e.g., v1.2.0). Default: latest.")
+    p_upgrade.add_argument("--install-dir", help="Custom install directory. Default: ~/.local/bin (Linux/macOS) or %%LOCALAPPDATA%% (Windows).")
     p_upgrade.add_argument("--no-verify", action="store_true", help="Skip checksum verification.")
 
-    p_where = sub.add_parser("where", help="Print where the neo4j-mcp binary will be installed.")
-    p_where.add_argument("--install-dir", help="Where to place the neo4j-mcp binary.")
+    p_where = sub.add_parser("where", help="Print where the neo4j-mcp binary is (or will be) installed.")
 
-    p_uninstall = sub.add_parser("uninstall", help="Remove the installed neo4j-mcp binary (does not remove caches).")
-    p_uninstall.add_argument("--install-dir", help="Where the neo4j-mcp binary was placed.")
+    p_uninstall = sub.add_parser("uninstall", help="Remove the installed neo4j-mcp binary.")
+    p_uninstall.add_argument("--install-dir", help="Custom install directory where the binary was placed.")
+    p_uninstall.add_argument("--clean-cache", action="store_true", help="Also remove downloaded archives and cached versions.")
 
     args = parser.parse_args()
     install_dir = Path(args.install_dir) if getattr(args, "install_dir", None) else default_install_dir()
@@ -68,6 +68,14 @@ def main() -> None:
             print(f"Removed: {path}")
         else:
             print(f"Not found: {path}")
+        
+        if args.clean_cache:
+            cache_dir = data_root()
+            if cache_dir.exists():
+                shutil.rmtree(cache_dir)
+                print(f"Removed cache: {cache_dir}")
+            else:
+                print(f"Cache not found: {cache_dir}")
         return
 
     # install/upgrade
