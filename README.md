@@ -58,3 +58,25 @@ Environment variables:
 - `NEO4J_MCP_VERSION="v1.2.3"` - Force specific version
 - `NEO4J_MCP_BASE_URL="https://github.com/<repo>/releases/download"` - Custom download URL
 - `NEO4J_MCP_SKIP_VERIFY="1"` - Skip SHA256 verification
+
+## Development
+
+### Running Tests
+
+```bash
+# Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install with dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest tests/
+
+# Run tests with coverage
+pytest tests/ --cov=neo4j_mcp_installer --cov-report=term-missing
+
+# Run specific test
+pytest tests/test_cli.py::TestMainInstall::test_install_basic -v
+```
